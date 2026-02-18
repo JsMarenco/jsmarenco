@@ -18,8 +18,11 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "framer-motion": ["vendor/framer-motion/index.tsx"],
+      "react-icons/fa6": ["vendor/react-icons/fa6.tsx"]
     }
   },
   "include": [
