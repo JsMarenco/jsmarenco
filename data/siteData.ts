@@ -26,6 +26,7 @@ import solanextImg from "../assets/projects/solanext.png";
 import sweepImg from "../assets/projects/sweep.png";
 import whatsappImg from "../assets/projects/whatsapp.png";
 import glucosaImg from "../assets/projects/glucosa.png";
+import menuImg from "../assets/projects/menu.png";
 
 export const siteData = {
   name: "Angel Marenco",
@@ -203,6 +204,15 @@ export const siteData = {
       image: sweepImg,
       color: "from-purple-500 to-indigo-600",
     },
+    {
+      "name": "Menu",
+      "description": "Interactive menu with admin panel, video generation, dark/light mode, and multi-language support (i18n).",
+      "tech": ["TypeScript", "Vite", "Tailwind CSS", "Remotion", "Playwright"],
+      "github": null,
+      "live": null,
+      "image": menuImg,
+      "color": "from-purple-500 to-indigo-600"
+    }
   ],
   navLinks: [
     { name: "About", href: "#about" },
