@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/base_layout.astro";
+import GlobalNav from "../components/global_nav.astro";
+import LandingFooter from "../components/landing_footer.astro";
+---
+
+<BaseLayout title="Not found | Angel Marenco" description="The page you requested could not be found." noindex>
+  <div class="grid min-h-dvh grid-rows-[auto_1fr_auto] bg-landing-canvas text-landing-ink">
+    <GlobalNav anchorPrefix="/" />
+    <main class="grid min-h-0 place-items-center px-4 py-16 text-center">
+      <section class="max-w-md space-y-5" data-reveal>
+        <p class="landing-eyebrow">404</p>
+        <h1 class="landing-heading">Page not found</h1>
+        <p class="text-base leading-[1.47] text-landing-graphite sm:text-[17px]">
+          The page you are looking for does not exist or has moved.
+        </p>
+        <a
+          href="/"
+          class="inline-flex rounded-landing-pill bg-landing-azure px-4 py-2.5 text-[17px] text-white transition-opacity duration-100 hover:opacity-[0.88] active:scale-95"
+        >
+          Back home
+        </a>
+      </section>
+    </main>
+    <LandingFooter />
+  </div>
+</BaseLayout>

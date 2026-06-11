@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+import siteData from "../../data/site_data";
+import glucosaImg from "../assets/projects/glucosa.png";
+import mariposaImg from "../assets/projects/mariposa.png";
+import menuImg from "../assets/projects/menu.png";
+import solanextImg from "../assets/projects/solanext.png";
+import sweepImg from "../assets/projects/sweep.png";
+import whatsappImg from "../assets/projects/whatsapp.png";
+
+const images = {
+  glucosa: glucosaImg,
+  mariposa: mariposaImg,
+  menu: menuImg,
+  solanext: solanextImg,
+  sweep: sweepImg,
+  whatsapp: whatsappImg,
+};
+---
+
+<section id="projects" class="landing-section bg-landing-canvas" data-reveal>
+  <div class="landing-container space-y-8 sm:space-y-12">
+    <div class="space-y-3 text-center">
+      <p class="landing-eyebrow">Projects</p>
+      <h2 class="landing-heading">What I've built</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
+      {siteData.projects.map((project) => {
+        const image = images[project.image as keyof typeof images];
+        return (
+          <article class="landing-card-pad card-shadow flex h-full flex-col rounded-landing-card border border-landing-hairline bg-white" data-reveal>
+            {image && (
+              <div class="mb-4 overflow-hidden rounded-[18px] bg-white sm:mb-6">
+                <Image
+                  src={image}
+                  alt={project.name}
+                  class="h-auto w-full object-cover"
+                  widths={[360, 520, 720]}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                />
+              </div>
+            )}
+
+            <div class="flex flex-1 flex-col gap-3 sm:gap-4">
+              <h3 class="text-xl font-semibold text-landing-ink sm:text-2xl">{project.name}</h3>
+              <p class="line-clamp-3 text-base leading-[1.47] text-landing-graphite sm:text-[17px]">
+                {project.description}
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                {project.tech.slice(0, 4).map((item) => (
+                  <span class="rounded-full border border-landing-hairline bg-landing-canvas px-2.5 py-0.5 text-[11px] text-landing-graphite sm:px-3 sm:py-1 sm:text-xs">
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              {(project.github || project.live) && (
+                <div class="mt-auto flex flex-wrap items-center gap-3 pt-2 sm:gap-4">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex min-h-11 items-center gap-1.5 text-sm text-landing-graphite transition-colors duration-100 hover:text-landing-ink"
+                    >
+                      Code
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex min-h-11 items-center gap-1.5 text-sm text-landing-graphite transition-colors duration-100 hover:text-landing-ink"
+                    >
+                      Live
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

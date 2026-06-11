@@ -1,0 +1,27 @@
+{
+  "name": "jjsmarenco",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "bun x biome check",
+    "format": "bun x biome format --write"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.5",
+    "simple-icons": "^16.23.0",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@types/node": "^20"
+  }
+}

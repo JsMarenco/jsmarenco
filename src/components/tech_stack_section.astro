@@ -1,0 +1,95 @@
+---
+import {
+  siBiome,
+  siBun,
+  siDocker,
+  siFigma,
+  siFramer,
+  siGithub,
+  siGoogle,
+  siLinux,
+  siMongodb,
+  siNextdotjs,
+  siNodedotjs,
+  siPostgresql,
+  siPython,
+  siRailway,
+  siReact,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+  siVite,
+} from "simple-icons";
+import siteData from "../../data/site_data";
+
+const categories = [
+  { title: "Frontend", data: siteData.techStack.frontend },
+  { title: "Backend", data: siteData.techStack.backend },
+  { title: "Tools", data: siteData.techStack.tools },
+];
+
+const codeIconPath =
+  "M8.7 16.9 3.8 12l4.9-4.9 1.4 1.4L6.6 12l3.5 3.5-1.4 1.4Zm6.6 0-1.4-1.4 3.5-3.5-3.5-3.5 1.4-1.4 4.9 4.9-4.9 4.9Zm-3.9 2.1-1.9-.6 3.1-12.1 1.9.6-3.1 12.1Z";
+const canvaIconPath =
+  "M12 2.2c5.4 0 9.8 4.4 9.8 9.8s-4.4 9.8-9.8 9.8S2.2 17.4 2.2 12 6.6 2.2 12 2.2Zm3.9 12.7c-.7.8-1.7 1.3-2.9 1.3-2.2 0-3.8-1.6-3.8-4.1 0-2.4 1.7-4.2 3.9-4.2 1.1 0 2 .4 2.7 1.1l-1.1 1.4c-.4-.4-.9-.7-1.6-.7-1.1 0-1.9.9-1.9 2.3 0 1.5.8 2.4 1.9 2.4.8 0 1.3-.3 1.8-.8l1 1.3Z";
+
+const icons = {
+  "Next.js": siNextdotjs,
+  React: siReact,
+  Vite: siVite,
+  "Tailwind CSS": siTailwindcss,
+  TypeScript: siTypescript,
+  "Framer Motion": siFramer,
+  "Node.js": siNodedotjs,
+  Python: siPython,
+  Bun: siBun,
+  PostgreSQL: siPostgresql,
+  MongoDB: siMongodb,
+  Railway: siRailway,
+  Docker: siDocker,
+  Figma: siFigma,
+  Canva: { path: canvaIconPath, title: "Canva" },
+  "VS Code": { path: codeIconPath, title: "VS Code" },
+  Antigravity: siGoogle,
+  Linux: siLinux,
+  Vercel: siVercel,
+  GitHub: siGithub,
+  Biome: siBiome,
+};
+---
+
+<section id="stack" class="landing-section bg-landing-canvas" data-reveal>
+  <div class="landing-container space-y-8 sm:space-y-12">
+    <div class="space-y-3 text-center">
+      <p class="landing-eyebrow">Stack</p>
+      <h2 class="landing-heading">What I use</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+      {categories.map((category) => (
+        <div class="landing-card-pad rounded-landing-card border border-landing-hairline bg-landing-canvas">
+          <h3 class="mb-4 text-lg font-semibold text-landing-ink sm:mb-5 sm:text-xl">
+            {category.title}
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            {category.data.map((tech) => (
+              <span class="inline-flex items-center gap-2 rounded-full border border-landing-hairline bg-landing-canvas px-2.5 py-1 text-xs text-landing-ink sm:px-3 sm:py-1.5 sm:text-sm">
+                <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-landing-azure/10 text-landing-azure">
+                  <svg
+                    viewBox="0 0 24 24"
+                    class="h-3.5 w-3.5"
+                    role="img"
+                    aria-label={`${tech.name} icon`}
+                  >
+                    <path fill="currentColor" d={icons[tech.name as keyof typeof icons]?.path ?? codeIconPath}></path>
+                  </svg>
+                </span>
+                {tech.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

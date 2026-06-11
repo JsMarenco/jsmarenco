@@ -1,0 +1,60 @@
+---
+import siteData from "../../data/site_data";
+---
+
+<section id="experience" class="landing-section bg-landing-canvas" data-reveal>
+  <div class="landing-container">
+    <div class="space-y-3 text-center">
+      <p class="landing-eyebrow">Experience</p>
+      <h2 class="landing-heading">Where I've worked</h2>
+    </div>
+
+    <div class="relative pt-8 sm:pt-10 md:pt-14">
+      <div
+        class="absolute bottom-4 left-4 top-4 z-0 w-[2px] -translate-x-1/2 bg-[#e8e8ed] sm:left-6 md:left-1/2"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="relative space-y-8 sm:space-y-12 md:space-y-16">
+        {siteData.experience.map((entry, index) => (
+          <div
+            data-reveal
+            class:list={[
+              "relative flex flex-col items-stretch gap-6 md:flex-row md:items-center md:gap-8",
+              index % 2 === 0 ? "md:flex-row-reverse" : "",
+            ]}
+          >
+            <div
+              class="absolute left-4 z-10 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-[3px] border-landing-canvas bg-landing-azure sm:left-6 sm:h-4 sm:w-4 sm:border-4 md:left-1/2"
+              aria-hidden="true"
+            >
+            </div>
+
+            <div class="w-full pl-9 sm:pl-12 md:w-1/2 md:pl-0">
+              <article
+                class:list={[
+                  "landing-card-pad card-shadow space-y-3 rounded-landing-card border border-landing-hairline bg-landing-canvas sm:space-y-4",
+                  index % 2 === 0 ? "md:ml-8 lg:ml-12" : "md:mr-8 lg:mr-12",
+                ]}
+              >
+                <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4">
+                  <span class="text-xs font-bold uppercase tracking-tight text-landing-azure sm:text-sm">
+                    {entry.year}
+                  </span>
+                  <h3 class="text-lg font-bold text-landing-ink sm:text-xl">{entry.role}</h3>
+                </div>
+                <p class="text-base font-medium text-landing-slate sm:text-lg">{entry.company}</p>
+                <p class="text-base leading-[1.47] text-landing-graphite sm:text-[17px]">
+                  {entry.description}
+                </p>
+              </article>
+            </div>
+
+            <div class="hidden md:block md:w-1/2" aria-hidden="true"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

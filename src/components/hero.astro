@@ -1,0 +1,112 @@
+---
+import siteData from "../../data/site_data";
+
+type Props = {
+  heroDark?: boolean;
+};
+
+const { heroDark = false } = Astro.props;
+---
+
+<section
+  id="overview"
+  class:list={[
+    "relative flex min-h-[100dvh] items-center overflow-hidden",
+    heroDark ? "bg-landing-obsidian text-landing-on-dark" : "bg-landing-canvas text-landing-ink",
+  ]}
+>
+  <div class="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
+    <div class="absolute left-[8%] top-[18%] h-44 w-44 rounded-full bg-landing-azure/10 blur-3xl"></div>
+    <div class="absolute bottom-[10%] right-[10%] h-60 w-60 rounded-full bg-black/5 blur-3xl"></div>
+  </div>
+
+  <div class="landing-container landing-section relative grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 lg:py-24">
+    <div class="order-1 space-y-6 text-center sm:space-y-8 lg:text-left" data-reveal>
+      <span
+        class:list={[
+          "landing-eyebrow inline-flex rounded-landing-pill border border-landing-hairline px-4 py-1.5",
+          heroDark ? "bg-white/10 text-landing-muted-dark" : "bg-landing-canvas text-landing-graphite",
+        ]}
+      >
+        {siteData.title}
+      </span>
+
+      <div class="space-y-4">
+        <h1 class="min-h-[1.04em] text-[clamp(2rem,9vw,6rem)] font-bold leading-[1.04] tracking-[-0.022em]">
+          {siteData.heroHeadlines.map((headline, index) => (
+            <span
+              data-hero-word
+              data-active={index === 0 ? "true" : "false"}
+              class="hero-word"
+            >
+              {headline}
+            </span>
+          ))}
+        </h1>
+        <p
+          class:list={[
+            "mx-auto max-w-xl text-base leading-[1.47] sm:text-[17px] lg:mx-0",
+            heroDark ? "text-landing-muted-dark" : "text-landing-graphite",
+          ]}
+        >
+          {siteData.heroTagline}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-start">
+        {siteData.stats.map((stat) => (
+          <span
+            class:list={[
+              "rounded-landing-pill border border-landing-hairline px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm",
+              heroDark ? "bg-white/10 text-landing-on-dark" : "bg-landing-canvas text-landing-ink",
+            ]}
+          >
+            <strong>{stat.value}</strong>{" "}
+            <span class={heroDark ? "text-landing-muted-dark" : "text-landing-graphite"}>
+              {stat.label}
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start">
+        <a
+          href="#contact"
+          class="rounded-landing-pill bg-landing-azure px-4 py-2.5 text-center text-[17px] text-white transition-opacity duration-100 hover:opacity-[0.88] active:scale-95 sm:py-2"
+        >
+          Get in touch
+        </a>
+        <a
+          href="#projects"
+          class:list={[
+            "rounded-landing-pill border border-landing-azure px-4 py-2.5 text-center text-[17px] transition-opacity duration-100 hover:opacity-80 active:scale-95 sm:py-2",
+            heroDark ? "text-landing-link-dark" : "text-landing-azure",
+          ]}
+        >
+          View projects
+        </a>
+      </div>
+    </div>
+
+    <div class="relative order-2 mx-auto aspect-square w-full max-w-[240px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-none" data-reveal>
+      <div
+        class:list={[
+          "absolute inset-0 rounded-landing-card border border-landing-hairline",
+          heroDark ? "bg-white/5" : "bg-landing-canvas",
+        ]}
+      >
+      </div>
+      <div class="relative flex h-full items-center justify-center p-6 sm:p-8 md:p-10">
+        <img
+          src="/logo.png"
+          alt={siteData.name}
+          width="420"
+          height="420"
+          class="h-auto w-full max-w-[220px] object-contain sm:max-w-[280px] md:max-w-[320px]"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>

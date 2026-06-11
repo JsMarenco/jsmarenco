@@ -1,0 +1,144 @@
+---
+import "../styles/global.css";
+import siteData from "../../data/site_data";
+
+type Props = {
+  title?: string;
+  description?: string;
+  siteUrl?: string;
+  canonicalPath?: string;
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+};
+
+const {
+  title = `${siteData.name} | ${siteData.title}`,
+  description = siteData.description,
+  siteUrl = Astro.url.origin === "null" ? "https://jsmarenco.dev" : Astro.url.origin,
+  canonicalPath = Astro.url.pathname,
+  image = "/og.png",
+  imageAlt = `${siteData.name} portfolio preview`,
+  noindex = false,
+} = Astro.props;
+
+const normalizedSiteUrl = siteUrl.replace(/\/$/, "");
+const canonicalUrl = new URL(canonicalPath, `${normalizedSiteUrl}/`).toString();
+const socialImageUrl = new URL(image, `${normalizedSiteUrl}/`).toString();
+const keywords = [
+  siteData.name,
+  siteData.username,
+  "full-stack developer",
+  "AI workflows",
+  "automation",
+  "web apps",
+  "bots",
+  "TypeScript",
+  "Astro",
+].join(", ");
+const skills = [
+  ...siteData.techStack.frontend,
+  ...siteData.techStack.backend,
+  ...siteData.techStack.tools,
+].map((tech) => tech.name);
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteData.name,
+  alternateName: siteData.username,
+  jobTitle: siteData.title,
+  description,
+  url: normalizedSiteUrl,
+  email: `mailto:${siteData.email}`,
+  image: socialImageUrl,
+  sameAs: siteData.socials.map((social) => social.url),
+  knowsAbout: skills,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteData.name} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteData.name} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:creator" content="@jsmarenco" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personJsonLd)} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-landing-canvas text-landing-ink antialiased">
+    <slot />
+    <script>
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const nav = document.querySelector("[data-global-nav]");
+      const updateNav = () => {
+        nav?.classList.toggle("nav-scrolled", window.scrollY > 48);
+      };
+      updateNav();
+      window.addEventListener("scroll", updateNav, { passive: true });
+
+      const menu = document.querySelector("[data-mobile-menu]");
+      const openButton = document.querySelector("[data-menu-open]");
+      const closeButtons = document.querySelectorAll("[data-menu-close]");
+      const setMenu = (open: boolean) => {
+        menu?.setAttribute("data-open", String(open));
+        openButton?.setAttribute("aria-expanded", String(open));
+        document.body.classList.toggle("menu-open", open);
+      };
+      openButton?.addEventListener("click", () => setMenu(true));
+      closeButtons.forEach((button) => button.addEventListener("click", () => setMenu(false)));
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setMenu(false);
+      });
+
+      const heroWords = Array.from(document.querySelectorAll("[data-hero-word]"));
+      if (heroWords.length > 1 && !prefersReducedMotion) {
+        let index = 0;
+        window.setInterval(() => {
+          heroWords[index]?.setAttribute("data-active", "false");
+          index = (index + 1) % heroWords.length;
+          heroWords[index]?.setAttribute("data-active", "true");
+        }, 2800);
+      }
+
+      const revealItems = document.querySelectorAll("[data-reveal]");
+      if ("IntersectionObserver" in window && !prefersReducedMotion) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px -80px" },
+        );
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
+      }
+    </script>
+  </body>
+</html>
