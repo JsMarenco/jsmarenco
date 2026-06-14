@@ -1,5 +1,11 @@
 ---
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 
 const year = new Date().getFullYear();
 ---
@@ -7,6 +13,6 @@ const year = new Date().getFullYear();
 <footer class="bg-landing-canvas px-4 py-12 sm:px-5 sm:py-14 md:px-8 lg:px-10 lg:py-16">
   <div class="landing-container space-y-2 text-center text-xs leading-[1.33] text-landing-graphite sm:text-sm">
     <p>© {year} {siteData.name}.</p>
-    <p>From Nicaragua to the world.</p>
+    <p>{siteData.ui.footerLine}</p>
   </div>
 </footer>

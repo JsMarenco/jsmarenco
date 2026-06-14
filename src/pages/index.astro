@@ -1,33 +1,21 @@
 ---
-import AboutSection from "../components/about_section.astro";
-import ContactSection from "../components/contact_section.astro";
-import ExperienceSection from "../components/experience_section.astro";
-import GlobalNav from "../components/global_nav.astro";
-import Hero from "../components/hero.astro";
-import LandingFooter from "../components/landing_footer.astro";
-import ProjectsSection from "../components/projects_section.astro";
-import TechStackSection from "../components/tech_stack_section.astro";
-import BaseLayout from "../layouts/base_layout.astro";
-import siteData from "../../data/site_data";
-
-const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://jsmarenco.dev";
-const heroMode = import.meta.env.PUBLIC_HERO_MODE ?? "light";
-const heroDark = heroMode === "dark";
+const target = "/en/";
 ---
 
-<BaseLayout
-  title={`${siteData.name} | ${siteData.title}`}
-  description={siteData.description}
-  siteUrl={siteUrl}
->
-  <main class="bg-landing-canvas text-landing-ink antialiased">
-    <GlobalNav />
-    <Hero heroDark={heroDark} />
-    <AboutSection />
-    <TechStackSection />
-    <ExperienceSection />
-    <ProjectsSection />
-    <ContactSection />
-    <LandingFooter />
-  </main>
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <script is:inline>
+      window.location.replace("/en/");
+    </script>
+    <title>Redirecting to Angel Marenco</title>
+  </head>
+  <body>
+    <a href={target}>Continue to English version</a>
+  </body>
+</html>

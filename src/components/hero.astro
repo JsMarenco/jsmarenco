@@ -1,11 +1,12 @@
 ---
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
 
 type Props = {
   heroDark?: boolean;
+  siteData: ReturnType<typeof getSiteData>;
 };
 
-const { heroDark = false } = Astro.props;
+const { heroDark = false, siteData } = Astro.props;
 ---
 
 <section
@@ -74,7 +75,7 @@ const { heroDark = false } = Astro.props;
           href="#contact"
           class="rounded-landing-pill bg-landing-azure px-4 py-2.5 text-center text-[17px] text-white transition-opacity duration-100 hover:opacity-[0.88] active:scale-95 sm:py-2"
         >
-          Get in touch
+          {siteData.ui.getInTouch}
         </a>
         <a
           href="#projects"
@@ -83,7 +84,7 @@ const { heroDark = false } = Astro.props;
             heroDark ? "text-landing-link-dark" : "text-landing-azure",
           ]}
         >
-          View projects
+          {siteData.ui.viewProjects}
         </a>
       </div>
     </div>

@@ -1,12 +1,18 @@
 ---
 import { Image } from "astro:assets";
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
 import glucosaImg from "../assets/projects/glucosa.png";
 import mariposaImg from "../assets/projects/mariposa.png";
 import menuImg from "../assets/projects/menu.png";
 import solanextImg from "../assets/projects/solanext.png";
 import sweepImg from "../assets/projects/sweep.png";
 import whatsappImg from "../assets/projects/whatsapp.png";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 
 const images = {
   glucosa: glucosaImg,
@@ -21,8 +27,8 @@ const images = {
 <section id="projects" class="landing-section bg-landing-canvas" data-reveal>
   <div class="landing-container space-y-8 sm:space-y-12">
     <div class="space-y-3 text-center">
-      <p class="landing-eyebrow">Projects</p>
-      <h2 class="landing-heading">What I've built</h2>
+      <p class="landing-eyebrow">{siteData.ui.projectsEyebrow}</p>
+      <h2 class="landing-heading">{siteData.ui.projectsHeading}</h2>
     </div>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
@@ -65,7 +71,7 @@ const images = {
                       rel="noopener noreferrer"
                       class="inline-flex min-h-11 items-center gap-1.5 text-sm text-landing-graphite transition-colors duration-100 hover:text-landing-ink"
                     >
-                      Code
+                      {siteData.ui.code}
                     </a>
                   )}
                   {project.live && (
@@ -75,7 +81,7 @@ const images = {
                       rel="noopener noreferrer"
                       class="inline-flex min-h-11 items-center gap-1.5 text-sm text-landing-graphite transition-colors duration-100 hover:text-landing-ink"
                     >
-                      Live
+                      {siteData.ui.live}
                     </a>
                   )}
                 </div>

@@ -1,12 +1,18 @@
 ---
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 ---
 
 <section id="experience" class="landing-section bg-landing-canvas" data-reveal>
   <div class="landing-container">
     <div class="space-y-3 text-center">
-      <p class="landing-eyebrow">Experience</p>
-      <h2 class="landing-heading">Where I've worked</h2>
+      <p class="landing-eyebrow">{siteData.ui.experienceEyebrow}</p>
+      <h2 class="landing-heading">{siteData.ui.experienceHeading}</h2>
     </div>
 
     <div class="relative pt-8 sm:pt-10 md:pt-14">

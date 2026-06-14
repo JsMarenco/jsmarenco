@@ -1,0 +1,42 @@
+---
+import { getLocalePath, getSiteData, type Locale } from "../../data/site_data";
+import AboutSection from "./about_section.astro";
+import ContactSection from "./contact_section.astro";
+import ExperienceSection from "./experience_section.astro";
+import GlobalNav from "./global_nav.astro";
+import Hero from "./hero.astro";
+import LandingFooter from "./landing_footer.astro";
+import ProjectsSection from "./projects_section.astro";
+import TechStackSection from "./tech_stack_section.astro";
+import BaseLayout from "../layouts/base_layout.astro";
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props;
+const siteData = getSiteData(locale);
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://jsmarenco.dev";
+const heroMode = import.meta.env.PUBLIC_HERO_MODE ?? "light";
+const heroDark = heroMode === "dark";
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${siteData.name} | ${siteData.title}`}
+  description={siteData.description}
+  siteUrl={siteUrl}
+  canonicalPath={getLocalePath(locale)}
+  imageAlt={`${siteData.name} ${siteData.title}`}
+>
+  <main class="bg-landing-canvas text-landing-ink antialiased">
+    <GlobalNav locale={locale} siteData={siteData} />
+    <Hero heroDark={heroDark} siteData={siteData} />
+    <AboutSection siteData={siteData} />
+    <TechStackSection siteData={siteData} />
+    <ExperienceSection siteData={siteData} />
+    <ProjectsSection siteData={siteData} />
+    <ContactSection siteData={siteData} />
+    <LandingFooter siteData={siteData} />
+  </main>
+</BaseLayout>

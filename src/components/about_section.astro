@@ -1,18 +1,24 @@
 ---
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 
 const profileSpecs = [
-  { label: "Role", value: siteData.title },
-  { label: "Experience", value: siteData.stats[0]?.value ?? "4+" },
-  { label: "Projects", value: siteData.stats[1]?.value ?? "20+" },
-  { label: "Availability", value: "Open to opportunities" },
+  { label: siteData.ui.role, value: siteData.title },
+  { label: siteData.ui.experience, value: siteData.stats[0]?.value ?? "4+" },
+  { label: siteData.ui.projects, value: siteData.stats[1]?.value ?? "20+" },
+  { label: siteData.ui.availability, value: siteData.ui.availabilityValue },
 ];
 ---
 
 <section id="about" class="landing-section bg-landing-canvas" data-reveal>
   <div class="landing-container grid grid-cols-1 items-start gap-8 md:gap-10 lg:grid-cols-[2fr_3fr] lg:items-center lg:gap-16">
     <div class="space-y-4 text-center sm:space-y-6 lg:text-left">
-      <p class="landing-eyebrow">About</p>
+      <p class="landing-eyebrow">{siteData.ui.aboutEyebrow}</p>
       <h2 class="landing-heading">{siteData.name}</h2>
       <p class="text-lg font-medium text-landing-ink sm:text-xl">{siteData.description}</p>
       <p class="text-base leading-[1.47] text-landing-graphite sm:text-[17px]">
@@ -21,7 +27,7 @@ const profileSpecs = [
     </div>
 
     <div class="landing-card-pad rounded-landing-card border border-landing-hairline bg-landing-canvas">
-      <p class="landing-eyebrow mb-4">Profile specs</p>
+      <p class="landing-eyebrow mb-4">{siteData.ui.profileSpecs}</p>
       <div class="divide-y divide-landing-hairline">
         {profileSpecs.map((row) => (
           <div class="flex min-h-11 items-center justify-between gap-4 py-2">

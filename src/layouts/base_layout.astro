@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import siteData from "../../data/site_data";
+import { defaultLocale, getLocalePath, getSiteData, locales, type Locale } from "../../data/site_data";
 
 type Props = {
   title?: string;
@@ -10,32 +10,37 @@ type Props = {
   image?: string;
   imageAlt?: string;
   noindex?: boolean;
+  locale?: Locale;
+  includeAlternates?: boolean;
 };
 
 const {
-  title = `${siteData.name} | ${siteData.title}`,
-  description = siteData.description,
+  locale = defaultLocale,
   siteUrl = Astro.url.origin === "null" ? "https://jsmarenco.dev" : Astro.url.origin,
   canonicalPath = Astro.url.pathname,
   image = "/og.png",
-  imageAlt = `${siteData.name} portfolio preview`,
   noindex = false,
+  includeAlternates = true,
 } = Astro.props;
 
+const siteData = getSiteData(locale);
+const {
+  title = `${siteData.name} | ${siteData.title}`,
+  description = siteData.description,
+  imageAlt = `${siteData.name} portfolio preview`,
+} = Astro.props;
 const normalizedSiteUrl = siteUrl.replace(/\/$/, "");
 const canonicalUrl = new URL(canonicalPath, `${normalizedSiteUrl}/`).toString();
 const socialImageUrl = new URL(image, `${normalizedSiteUrl}/`).toString();
 const keywords = [
   siteData.name,
   siteData.username,
-  "full-stack developer",
-  "AI workflows",
-  "automation",
-  "web apps",
-  "bots",
-  "TypeScript",
-  "Astro",
+  ...siteData.keywords,
 ].join(", ");
+const alternateUrls = locales.map((alternateLocale) => ({
+  locale: alternateLocale,
+  url: new URL(getLocalePath(alternateLocale), `${normalizedSiteUrl}/`).toString(),
+}));
 const skills = [
   ...siteData.techStack.frontend,
   ...siteData.techStack.backend,
@@ -57,7 +62,7 @@ const personJsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={siteData.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -67,6 +72,10 @@ const personJsonLd = {
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href={canonicalUrl} />
+    {includeAlternates && alternateUrls.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.locale} href={alternate.url} />
+    ))}
+    {includeAlternates && <link rel="alternate" hreflang="x-default" href={new URL(getLocalePath(defaultLocale), `${normalizedSiteUrl}/`).toString()} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -74,7 +83,12 @@ const personJsonLd = {
     <meta property="og:site_name" content={siteData.name} />
     <meta property="og:image" content={socialImageUrl} />
     <meta property="og:image:alt" content={imageAlt} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={siteData.ogLocale} />
+    {includeAlternates && alternateUrls
+      .filter((alternate) => alternate.locale !== locale)
+      .map((alternate) => (
+        <meta property="og:locale:alternate" content={getSiteData(alternate.locale).ogLocale} />
+      ))}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -111,6 +125,15 @@ const personJsonLd = {
       closeButtons.forEach((button) => button.addEventListener("click", () => setMenu(false)));
       window.addEventListener("keydown", (event) => {
         if (event.key === "Escape") setMenu(false);
+      });
+
+      document.querySelectorAll<HTMLAnchorElement>("[data-locale-switch]").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (!window.location.hash) return;
+          const url = new URL(link.href);
+          url.hash = window.location.hash;
+          link.href = url.toString();
+        });
       });
 
       const heroWords = Array.from(document.querySelectorAll("[data-hero-word]"));

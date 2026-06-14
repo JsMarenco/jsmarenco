@@ -2,26 +2,34 @@
 import BaseLayout from "../layouts/base_layout.astro";
 import GlobalNav from "../components/global_nav.astro";
 import LandingFooter from "../components/landing_footer.astro";
+import { defaultLocale, getSiteData } from "../../data/site_data";
+
+const siteData = getSiteData(defaultLocale);
 ---
 
-<BaseLayout title="Not found | Angel Marenco" description="The page you requested could not be found." noindex>
+<BaseLayout
+  locale={defaultLocale}
+  title={siteData.ui.notFoundTitle}
+  description={siteData.ui.notFoundDescription}
+  noindex
+>
   <div class="grid min-h-dvh grid-rows-[auto_1fr_auto] bg-landing-canvas text-landing-ink">
-    <GlobalNav anchorPrefix="/" />
+    <GlobalNav anchorPrefix={`/${defaultLocale}/`} locale={defaultLocale} siteData={siteData} />
     <main class="grid min-h-0 place-items-center px-4 py-16 text-center">
       <section class="max-w-md space-y-5" data-reveal>
         <p class="landing-eyebrow">404</p>
-        <h1 class="landing-heading">Page not found</h1>
+        <h1 class="landing-heading">{siteData.ui.notFoundHeading}</h1>
         <p class="text-base leading-[1.47] text-landing-graphite sm:text-[17px]">
-          The page you are looking for does not exist or has moved.
+          {siteData.ui.notFoundCopy}
         </p>
         <a
-          href="/"
+          href={`/${defaultLocale}/`}
           class="inline-flex rounded-landing-pill bg-landing-azure px-4 py-2.5 text-[17px] text-white transition-opacity duration-100 hover:opacity-[0.88] active:scale-95"
         >
-          Back home
+          {siteData.ui.backHome}
         </a>
       </section>
     </main>
-    <LandingFooter />
+    <LandingFooter siteData={siteData} />
   </div>
 </BaseLayout>

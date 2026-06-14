@@ -1,6 +1,12 @@
 ---
 import { siGithub, siX } from "simple-icons";
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 
 const linkedinIconPath =
   "M20.45 20.45h-3.56v-5.58c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.95v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.56V9h3.56v11.45Z";
@@ -17,7 +23,7 @@ const socialIcons = {
 <section id="contact" class="landing-section bg-landing-canvas" data-reveal>
   <div class="landing-container space-y-8 text-center sm:space-y-10">
     <div class="space-y-3 sm:space-y-4">
-      <p class="landing-eyebrow">Contact</p>
+      <p class="landing-eyebrow">{siteData.ui.contactEyebrow}</p>
       <h2 class="landing-heading">{siteData.contactHeading}</h2>
       <p class="mx-auto max-w-xl px-2 text-base leading-[1.47] text-landing-graphite sm:px-0 sm:text-[17px]">
         {siteData.contactDescription}
@@ -27,14 +33,14 @@ const socialIcons = {
     <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
       <a
         href={`mailto:${siteData.email}`}
-        aria-label="Email"
+        aria-label={siteData.ui.email}
         class="flex h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-landing-hairline bg-landing-canvas px-3 text-sm font-semibold text-landing-graphite transition-colors duration-100 hover:text-landing-ink"
       >
         <svg
           viewBox="0 0 24 24"
           class="h-4.5 w-4.5"
           role="img"
-          aria-label="Email icon"
+          aria-label={siteData.ui.emailIcon}
         >
           <path fill="currentColor" d={mailIconPath}></path>
         </svg>

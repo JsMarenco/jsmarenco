@@ -20,12 +20,18 @@ import {
   siVercel,
   siVite,
 } from "simple-icons";
-import siteData from "../../data/site_data";
+import type { getSiteData } from "../../data/site_data";
+
+type Props = {
+  siteData: ReturnType<typeof getSiteData>;
+};
+
+const { siteData } = Astro.props;
 
 const categories = [
   { title: "Frontend", data: siteData.techStack.frontend },
   { title: "Backend", data: siteData.techStack.backend },
-  { title: "Tools", data: siteData.techStack.tools },
+  { title: siteData.ui.tools, data: siteData.techStack.tools },
 ];
 
 const codeIconPath =
@@ -61,8 +67,8 @@ const icons = {
 <section id="stack" class="landing-section bg-landing-canvas" data-reveal>
   <div class="landing-container space-y-8 sm:space-y-12">
     <div class="space-y-3 text-center">
-      <p class="landing-eyebrow">Stack</p>
-      <h2 class="landing-heading">What I use</h2>
+      <p class="landing-eyebrow">{siteData.ui.stackEyebrow}</p>
+      <h2 class="landing-heading">{siteData.ui.stackHeading}</h2>
     </div>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
