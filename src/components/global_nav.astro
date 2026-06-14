@@ -13,6 +13,7 @@ const menuDelay = (index: number) => `${60 + index * 50}ms`;
 const hrefFor = (href: string) => `${anchorPrefix}${href}`;
 const languageHref = (targetLocale: Locale) => getLocalePath(targetLocale, Astro.url.hash);
 const alternateLocale = locale === "en" ? "es" : "en";
+const logoSrc = "/jsmarenco-logo.avif";
 const translateIconPath =
   "M12.87 15.07a14.58 14.58 0 0 0 2.43-4.17H18V9h-5V7h-2v2H6v1.9h7.18a12.2 12.2 0 0 1-1.72 2.8 13.5 13.5 0 0 1-1.33-2.02H8.05a15.72 15.72 0 0 0 2.1 3.03l-2.44 2.4L9.1 18.5l2.36-2.36 1.47 1.47 1.38-1.38-1.44-1.16ZM19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V5h14v14Z";
 ---
@@ -22,8 +23,8 @@ const translateIconPath =
   class="sticky top-0 z-(--z-landing-nav) flex h-11 w-full items-center justify-between border-b border-[rgba(0,0,0,0.08)] bg-[rgba(250,250,252,0.92)] px-4 text-landing-ink backdrop-blur-[20px] backdrop-saturate-[180%] transition-[background-color,border-color,color] duration-200 sm:px-5 md:px-8"
 >
   <a href={hrefFor("#overview")} class="flex shrink-0 items-center gap-2">
-    <span class="relative flex h-6 w-6 shrink-0 items-center justify-center sm:h-7 sm:w-7">
-      <img src="/logo.png" alt="" class="h-full w-full object-contain" width="28" height="28" />
+    <span class="relative flex h-7 shrink-0 items-center justify-center">
+      <img src={logoSrc} alt="" class="aspect-square h-full w-auto object-contain" width="28" height="28" />
     </span>
     <span class="text-sm font-semibold tracking-tight sm:text-base">{siteData.username}</span>
   </a>
@@ -88,7 +89,7 @@ const translateIconPath =
 >
   <header class="flex h-11 shrink-0 items-center justify-between border-b border-landing-hairline px-4 sm:px-5">
     <a href={hrefFor("#overview")} data-menu-close class="flex shrink-0 items-center gap-2">
-      <img src="/logo.png" alt="" class="h-6 w-6 object-contain" width="24" height="24" />
+      <img src={logoSrc} alt="" class="aspect-square h-7 w-auto object-contain" width="28" height="28" />
       <span class="text-sm font-semibold tracking-tight text-landing-ink">{siteData.username}</span>
     </a>
     <button
